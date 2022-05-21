@@ -8,10 +8,9 @@ nocodb-down: context
 nocodb-logs: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env logs -f
 
-# TODO eliminar la carpeta spring de la ruta
 traefik-up: context
-	docker compose -f ./spring/traefik/docker-compose.yml --env-file .env up -d
+	docker compose -f ./traefik/docker-compose.yml --env-file .env up -d
 traefik-down: context
-	docker compose -f ./spring/traefik/docker-compose.yml --env-file .env down -v
+	docker compose -f ./traefik/docker-compose.yml --env-file .env down -v
 traefik-logs: context
-	docker compose -f ./spring/traefik/docker-compose.yml --env-file .env logs -f
+	docker compose -f ./traefik/docker-compose.yml --env-file .env logs -f
