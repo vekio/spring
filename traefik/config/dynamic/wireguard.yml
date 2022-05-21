@@ -1,0 +1,14 @@
+http:
+  routers:
+
+    wireguard:
+      entryPoints:
+        - websecure
+      rule: 'Host(`wireguard.DOMAIN`)'
+      service: wireguard
+
+  services:
+    wireguard:
+      loadBalancer:
+        servers:
+          - url: "http://WIREGUARD"
