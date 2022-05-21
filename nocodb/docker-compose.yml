@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+
+  db:
+    image: postgres:12-alpine
+    container_name: nocodb-db
+    restart: unless-stopped
+    networks:
+      - nocodb
+    volumes:
+      - ${DATA_PATH}/nocodb/db:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_DB=${NC_DB_NAME}
+      - POSTGRES_USER=${NC_DB_USER}
+      - POSTGRES_PASSWORD=${NC_DB_PASS}
+    labels:
+      - traefik.enable=false
+    healthcheck:
+      test: pg_isready -U ${NC_DB_USER} -d ${NC_DB_NAME}
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nocodb
+      - proxy
+    # ports:
+    #   - 8080:8080
+    volumes:
+      - ${DATA_PATH}/nocodb/data:/usr/app/data:rw
+    environment:
+      - NC_DB=pg://db:5432?u=${NC_DB_USER}&p=${NC_DB_PASS}&d=${NC_DB_NAME}
+      - NC_PUBLIC_URL=https://nocodb.${DOMAIN}
+      - NC_DISABLE_TELE=true
+      # - NC_DASHBOARD_URL=/mercanza
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nocodb-rtr.entrypoints=websecure
+      # - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`) && PathPrefix(`/mercanza`)
+      - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`)
+      - traefik.http.routers.nocodb-rtr.service=nocodb-svc
+      - traefik.http.services.nocodb-svc.loadbalancer.server.port=8080
+
+networks:
+  nocodb:
+    name: nocodb
+  proxy:
+    external: true
