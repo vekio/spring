@@ -28,6 +28,20 @@ entryPoints:
       middlewares:
         - secure-headers@file
 
+  expose:
+    address: :8443
+    http:
+      tls:
+        # Generate a wildcard domain certificate
+        certResolver: digitalocean
+        domains:
+          - main: DOMAIN
+            sans:
+              - '*.DOMAIN'
+      middlewares:
+        - secure-headers@file
+        - exposeWhiteList@file
+
   ssh:
     address: :666
 

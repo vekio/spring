@@ -43,8 +43,7 @@ services:
       # - NC_DASHBOARD_URL=/mercanza
     labels:
       - traefik.enable=true
-      - traefik.http.routers.nocodb-rtr.entrypoints=websecure
-      # - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`) && PathPrefix(`/mercanza`)
+      - traefik.http.routers.nocodb-rtr.entrypoints=websecure, expose
       - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`)
       - traefik.http.routers.nocodb-rtr.service=nocodb-svc
       - traefik.http.services.nocodb-svc.loadbalancer.server.port=8080
