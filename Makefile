@@ -21,3 +21,10 @@ traefik-down: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env down -v
 traefik-logs: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env logs -f
+
+vaultwarden-up: context
+	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env up -d
+vaultwarden-down: context
+	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env down -v
+vaultwarden-logs: context
+	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env logs -f
