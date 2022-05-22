@@ -1,6 +1,13 @@
 context:
 	docker context use spring
 
+gitea-up: context
+	docker compose -f ./gitea/docker-compose.yml --env-file .env up -d
+gitea-down: context
+	docker compose -f ./gitea/docker-compose.yml --env-file .env down -v
+gitea-logs: context
+	docker compose -f ./gitea/docker-compose.yml --env-file .env logs -f
+
 nocodb-up: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env up -d
 nocodb-down: context
