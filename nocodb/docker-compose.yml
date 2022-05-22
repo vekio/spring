@@ -38,9 +38,9 @@ services:
       - ${DATA_PATH}/nocodb/data:/usr/app/data:rw
     environment:
       - NC_DB=pg://db:5432?u=${NC_DB_USER}&p=${NC_DB_PASS}&d=${NC_DB_NAME}
-      - NC_PUBLIC_URL=https://nocodb.${DOMAIN}
-      - NC_DISABLE_TELE=true
-      # - NC_DASHBOARD_URL=/mercanza
+      - NC_PUBLIC_URL=https://nocodb.${DOMAIN} # Used for sending Email invitations
+      - NC_DISABLE_TELE=true # Disable telemetry
+      - NC_INVITE_ONLY_SIGNUP=true # Allow users to signup only via invite url
     labels:
       - traefik.enable=true
       - traefik.http.routers.nocodb-rtr.entrypoints=websecure, expose
