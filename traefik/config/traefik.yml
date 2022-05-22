@@ -1,0 +1,56 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+serversTransport:
+  insecureSkipVerify: true
+
+entryPoints:
+
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure:
+    address: :443
+    http:
+      tls:
+        # Generate a wildcard domain certificate
+        certResolver: digitalocean
+        domains:
+          - main: DOMAIN
+            sans:
+              - '*.DOMAIN'
+      middlewares:
+        - secure-headers@file
+
+  ssh:
+    address: :666
+
+providers:
+  providersThrottleDuration: 2s
+
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+  docker:
+    watch: true
+    network: proxy
+    exposedByDefault: false
+
+api:
+  dashboard: true
+
+certificatesResolvers:
+  digitalocean:
+    acme:
+      email: LETSENCRYPTEMAIL
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+      storage: /letsencrypt/acme.json
+      dnsChallenge:
+        provider: digitalocean

@@ -1,0 +1,21 @@
+http:
+  routers:
+
+    pihole:
+      entryPoints:
+        - websecure
+      rule: 'Host(`pihole.DOMAIN`)'
+      service: pihole
+      middlewares:
+        - pihole-prefix
+
+  services:
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://PIHOLE"
+
+  middlewares:
+    pihole-prefix:
+      addPrefix:
+        prefix: "/admin"
