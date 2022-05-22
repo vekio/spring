@@ -28,3 +28,10 @@ vaultwarden-down: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env down -v
 vaultwarden-logs: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env logs -f
+
+vikunja-up: context
+	docker compose -f ./vikunja/docker-compose.yml --env-file .env up -d
+vikunja-down: context
+	docker compose -f ./vikunja/docker-compose.yml --env-file .env down -v
+vikunja-logs: context
+	docker compose -f ./vikunja/docker-compose.yml --env-file .env logs -f
