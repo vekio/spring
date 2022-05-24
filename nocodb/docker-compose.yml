@@ -3,7 +3,7 @@ version: "3.7"
 services:
 
   db:
-    image: postgres:12-alpine
+    image: postgres:14-alpine
     container_name: nocodb-db
     restart: unless-stopped
     networks:
@@ -38,13 +38,12 @@ services:
       - ${DATA_PATH}/nocodb/data:/usr/app/data:rw
     environment:
       - NC_DB=pg://db:5432?u=${NC_DB_USER}&p=${NC_DB_PASS}&d=${NC_DB_NAME}
-      - NC_PUBLIC_URL=https://nocodb.${DOMAIN}
-      - NC_DISABLE_TELE=true
-      # - NC_DASHBOARD_URL=/mercanza
+      - NC_PUBLIC_URL=https://nocodb.${DOMAIN} # Used for sending Email invitations
+      - NC_DISABLE_TELE=true # Disable telemetry
+      - NC_INVITE_ONLY_SIGNUP=true # Allow users to signup only via invite url
     labels:
       - traefik.enable=true
-      - traefik.http.routers.nocodb-rtr.entrypoints=websecure
-      # - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`) && PathPrefix(`/mercanza`)
+      - traefik.http.routers.nocodb-rtr.entrypoints=websecure, expose
       - traefik.http.routers.nocodb-rtr.rule=Host(`nocodb.${DOMAIN}`)
       - traefik.http.routers.nocodb-rtr.service=nocodb-svc
       - traefik.http.services.nocodb-svc.loadbalancer.server.port=8080
