@@ -15,6 +15,13 @@ gitea-down: context
 gitea-logs: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env logs -f
 
+joplin-up: context
+	docker compose -f ./joplin/docker-compose.yml --env-file .env up -d
+joplin-down: context
+	docker compose -f ./joplin/docker-compose.yml --env-file .env down -v
+joplin-logs: context
+	docker compose -f ./joplin/docker-compose.yml --env-file .env logs -f
+
 nocodb-up: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env up -d
 nocodb-down: context

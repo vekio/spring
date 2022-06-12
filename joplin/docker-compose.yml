@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+
+  db:
+    image: postgres:13-alpine
+    container_name: joplin-db
+    restart: unless-stopped
+    networks:
+      - joplin
+    volumes:
+      - ${DATA_PATH}/joplin/db:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_DB=${JOPLIN_DB_NAME}
+      - POSTGRES_USER=${JOPLIN_DB_USER}
+      - POSTGRES_PASSWORD=${JOPLIN_DB_PASS}
+    labels:
+      - traefik.enable=false
+    healthcheck:
+      test: pg_isready -U ${JOPLIN_DB_USER} -d ${JOPLIN_DB_NAME}
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+  joplin:
+    image: joplin/server:latest
+    container_name: joplin
+    restart: unless-stopped
+    networks:
+      - proxy
+      - joplin
+    # ports:
+    #   - 22300:22300
+    depends_on:
+      - db
+    environment:
+      - APP_BASE_URL=https://joplin.${DOMAIN}
+      - APP_PORT=22300
+      - POSTGRES_PASSWORD=${JOPLIN_DB_PASS}
+      - POSTGRES_DATABASE=${JOPLIN_DB_NAME}
+      - POSTGRES_USER=${JOPLIN_DB_USER}
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=db
+      - DB_CLIENT=pg
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.joplin-rtr.entrypoints=websecure
+      - traefik.http.routers.joplin-rtr.rule=Host(`joplin.${DOMAIN}`)
+      - traefik.http.routers.joplin-rtr.service=joplin-svc
+      - traefik.http.services.joplin-svc.loadbalancer.server.port=22300
+
+networks:
+  joplin:
+    name: joplin
+  proxy:
+    external: true
