@@ -9,6 +9,7 @@ excalidraw-logs: context
 	docker compose -f ./excalidraw/docker-compose.yml --env-file .env logs -f
 excalidraw-pull: context
 	docker compose -f ./excalidraw/docker-compose.yml --env-file .env pull
+excalidraw-update: excalidraw-pull excalidraw-up
 
 gitea-up: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env up -d
@@ -28,6 +29,7 @@ joplin-logs: context
 	docker compose -f ./joplin/docker-compose.yml --env-file .env logs -f
 joplin-pull: context
 	docker compose -f ./joplin/docker-compose.yml --env-file .env pull
+joplin-update: joplin-pull joplin-up
 
 nocodb-up: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env up -d
@@ -47,6 +49,7 @@ traefik-logs: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env logs -f
 traefik-pull: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env pull
+traefik-update: traefik-pull traefik-up
 
 vaultwarden-up: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env up -d
@@ -56,6 +59,7 @@ vaultwarden-logs: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env logs -f
 vaultwarden-pull: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env pull
+vaultwarden-update: vaultwarden-pull vaultwarden-up
 
 vikunja-up: context
 	docker compose -f ./vikunja/docker-compose.yml --env-file .env up -d
