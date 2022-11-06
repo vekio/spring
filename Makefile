@@ -1,3 +1,7 @@
+clean:
+	docker image prune -a -f
+	docker container prune -f
+
 context:
 	docker context use spring
 
