@@ -18,6 +18,7 @@ gitea-logs: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env logs -f
 gitea-pull: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env pull
+gitea-update: gitea-pull gitea-up
 
 joplin-up: context
 	docker compose -f ./joplin/docker-compose.yml --env-file .env up -d
@@ -36,6 +37,7 @@ nocodb-logs: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env logs -f
 nocodb-pull: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env pull
+nocodb-update: nocodb-pull nocodb-up
 
 traefik-up: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env up -d
@@ -63,3 +65,4 @@ vikunja-logs: context
 	docker compose -f ./vikunja/docker-compose.yml --env-file .env logs -f
 vikunja-pull: context
 	docker compose -f ./vikunja/docker-compose.yml --env-file .env pull
+vikunja-update: vikunja-pull vikunja-up

@@ -53,7 +53,7 @@ services:
       - proxy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.vikunjaWeb-rtr.entrypoints=websecure
+      - traefik.http.routers.vikunjaWeb-rtr.entrypoints=websecure, expose
       - traefik.http.routers.vikunjaWeb-rtr.rule=Host(`vikunja.${DOMAIN}`)
       - traefik.http.routers.vikunjaWeb-rtr.service=vikunjaWeb-svc
       - traefik.http.services.vikunjaWeb-svc.loadbalancer.server.port=80

@@ -61,7 +61,7 @@ services:
     labels:
       - traefik.enable=true
       # web
-      - traefik.http.routers.giteaWeb-rtr.entrypoints=websecure
+      - traefik.http.routers.giteaWeb-rtr.entrypoints=websecure, expose
       - traefik.http.routers.giteaWeb-rtr.rule=Host(`gitea.${DOMAIN}`)
       - traefik.http.routers.giteaWeb-rtr.service=giteaWeb-svc
       - traefik.http.services.giteaWeb-svc.loadbalancer.server.port=3000
