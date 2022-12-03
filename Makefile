@@ -15,16 +15,6 @@ gitea-pull: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env pull
 gitea-update: gitea-pull gitea-up
 
-joplin-up: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env up -d
-joplin-down: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env down -v
-joplin-logs: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env logs -f
-joplin-pull: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env pull
-joplin-update: joplin-pull joplin-up
-
 nocodb-up: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env up -d
 nocodb-down: context
