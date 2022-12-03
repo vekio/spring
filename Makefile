@@ -5,16 +5,6 @@ clean:
 context:
 	docker context use spring
 
-excalidraw-up: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env up -d
-excalidraw-down: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env down -v
-excalidraw-logs: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env logs -f
-excalidraw-pull: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env pull
-excalidraw-update: excalidraw-pull excalidraw-up
-
 gitea-up: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env up -d
 gitea-down: context
@@ -24,16 +14,6 @@ gitea-logs: context
 gitea-pull: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env pull
 gitea-update: gitea-pull gitea-up
-
-joplin-up: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env up -d
-joplin-down: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env down -v
-joplin-logs: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env logs -f
-joplin-pull: context
-	docker compose -f ./joplin/docker-compose.yml --env-file .env pull
-joplin-update: joplin-pull joplin-up
 
 nocodb-up: context
 	docker compose -f ./nocodb/docker-compose.yml --env-file .env up -d
@@ -54,6 +34,16 @@ traefik-logs: context
 traefik-pull: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env pull
 traefik-update: traefik-pull traefik-up
+
+trilium-up: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env up -d
+trilium-down: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env down -v
+trilium-logs: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env logs -f
+trilium-pull: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env pull
+trilium-update: trilium-pull trilium-up
 
 vaultwarden-up: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env up -d
