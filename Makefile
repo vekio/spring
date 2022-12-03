@@ -55,6 +55,16 @@ traefik-pull: context
 	docker compose -f ./traefik/docker-compose.yml --env-file .env pull
 traefik-update: traefik-pull traefik-up
 
+trilium-up: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env up -d
+trilium-down: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env down -v
+trilium-logs: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env logs -f
+trilium-pull: context
+	docker compose -f ./trilium/docker-compose.yml --env-file .env pull
+trilium-update: trilium-pull trilium-up
+
 vaultwarden-up: context
 	docker compose -f ./vaultwarden/docker-compose.yml --env-file .env up -d
 vaultwarden-down: context
