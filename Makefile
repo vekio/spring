@@ -5,16 +5,6 @@ clean:
 context:
 	docker context use spring
 
-excalidraw-up: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env up -d
-excalidraw-down: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env down -v
-excalidraw-logs: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env logs -f
-excalidraw-pull: context
-	docker compose -f ./excalidraw/docker-compose.yml --env-file .env pull
-excalidraw-update: excalidraw-pull excalidraw-up
-
 gitea-up: context
 	docker compose -f ./gitea/docker-compose.yml --env-file .env up -d
 gitea-down: context
