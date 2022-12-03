@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+
+  trilium:
+    image: zadam/trilium:${TRILIUM_VERSION}
+    container_name: trilium
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - ${DATA_PATH}/trilium:/home/node/trilium-data:rw
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.trilium-rtr.entrypoints=websecure, expose
+      - traefik.http.routers.trilium-rtr.rule=Host(`trilium.${DOMAIN}`)
+      - traefik.http.routers.trilium-rtr.service=trilium-svc
+      - traefik.http.services.trilium-svc.loadbalancer.server.port=8080
+
+networks:
+  proxy:
+    external: true
